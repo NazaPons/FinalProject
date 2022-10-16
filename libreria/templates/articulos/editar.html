@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %} Editar artículo {% endblock %}
+    
+{% block contenido %} 
+
+
+<div class="card">
+    <div class="card-header">
+        Editar contenido del artículo
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del artículo</h4>
+        
+        {% include 'articulos/form.html' %}
+
+    </div>
+    <div class="card-footer text-muted">
+        
+    </div>
+</div>
+
+
+
+{% endblock %}

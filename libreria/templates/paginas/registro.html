@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %} Registro {% endblock %}
+    
+{% block contenido %} 
+
+
+<form class="form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" id="submit">Registrarse</button>
+</form>
+
+
+
+{% endblock %}
