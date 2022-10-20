@@ -10,7 +10,8 @@
     {% csrf_token %}
     {{ form.as_p }}
 
-    <button type="submit" id="submit">Loguearse</button>
+    <button class="btn btn-primary" type="submit" id="submit">Loguearse</button>
+    <a name="" id="" class="btn btn-danger" href="{% url 'inicio' %}" role="button">Cancelar</a>
 </form>
 
 
