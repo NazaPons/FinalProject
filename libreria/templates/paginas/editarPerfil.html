@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %} Editar Perfil {% endblock %}
+    
+{% block contenido %} 
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Editar Perfil - {{user.username}}</h1>
+    </div>
+        <div class="list-group">
+            <form method="POST">{% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <button  class="btn btn-primary" type="submit" id="submit">Editar Perfil</button>
+                <a class="btn btn-danger" href="{% url 'perfil' %}" role="button">Cancelar</a>
+            </form>
+        </div>     
+</div>
+
+
+{% endblock %}

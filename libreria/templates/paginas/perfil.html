@@ -1,21 +1,32 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block titulo %} Logout {% endblock %}
+{% block titulo %} Perfil {% endblock %}
     
 {% block contenido %} 
 
 
-<div style="position: relative; top: 80px">
-    <ul>
-        <li>{{ user.username }}</li>
-        <li>{{ user.email }}</li>
-        <li>{{ user.first_name }}</li>
-        <li>{{ user.last_name }}</li>
-    </ul>
-    <a href="/Brainbook/perfil/editarPerfil">Editar Perfil</a>
-    <a href="/Brainbook/perfil/changeAvatar/">Cambiar imagen de perfil</a>
-</div> 
+
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Mi Perfil - {{user.username}}</h1>
+    </div>
+    <div class="table-responsive">
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action">Usuario: {{ user.username }}</a>
+            <a class="list-group-item list-group-item-action">Email: {{user.email}}</a>
+            <a class="list-group-item list-group-item-action">Nombre: {{ user.first_name }}</a>
+            <a class="list-group-item list-group-item-action">Apellido: {{ user.last_name }}</a>
+        </div>
+        
+    </div>     
+    <br>   
+    <a name="" id="" class="btn btn-primary" href="" role="button">Cambiar foto de perfil</a>
+    <br>
+    <a name="" id="" class="btn btn-primary" href="{% url 'editarPerfil' %}" role="button">Editar Perfil</a>
+    <br>
+    <a name="" id="" class="btn btn-primary" href="{% url 'cambiarContraseña' %}" role="button">Cambiar Contraseña</a>
+</div>
 
 
 {% endblock %}
