@@ -20,11 +20,11 @@ class UserRegisterForm(UserCreationForm):
         help_texts = {k:"" for k in fields}
 
 class UserEditForm(UserChangeForm):
-    username = forms.CharField(widget= forms.TextInput(attrs={'placeholder': 'Usuario: '}))
-    email = forms.EmailField(widget= forms.TextInput(attrs={'placeholder': 'Email: '}))
-    first_name = forms.CharField(widget= forms.TextInput(attrs={'placeholder': 'Nombre: '}))
-    last_name = forms.CharField(widget= forms.TextInput(attrs={'placeholder': 'Apellido: '}))
-    password = forms.CharField(widget= forms.PasswordInput(attrs={'placeholder': 'Contraseña: '}))
+    username = forms.CharField(label="Usuario", widget= forms.TextInput(attrs={'placeholder': 'Usuario: '}))
+    email = forms.EmailField(label="Email", widget= forms.TextInput(attrs={'placeholder': 'Email: '}))
+    first_name = forms.CharField(label="Nombre", widget= forms.TextInput(attrs={'placeholder': 'Nombre: '}))
+    last_name = forms.CharField(label="Apellido", widget= forms.TextInput(attrs={'placeholder': 'Apellido: '}))
+    password = forms.CharField(label="Contraseña", widget= forms.PasswordInput(attrs={'placeholder': 'Contraseña: '}))
 
     class Meta:
         model = User
@@ -32,9 +32,9 @@ class UserEditForm(UserChangeForm):
         help_texts = {k:"" for k in fields}
 
 class ChangePasswordForm(PasswordChangeForm):
-    old_password = forms.CharField(label="", widget= forms.PasswordInput(attrs={'placeholder': "Vieja Contraseña: "}))
-    new_password1 = forms.CharField(label="",widget= forms.PasswordInput(attrs={'placeholder': "Nueva Contraseña: "}))
-    new_password2 = forms.CharField(label="",widget= forms.PasswordInput(attrs={'placeholder': "Confirmar nueva contraseña: "}))
+    old_password = forms.CharField(label="Vieja Contraseña", widget= forms.PasswordInput(attrs={'placeholder': "Vieja Contraseña"}))
+    new_password1 = forms.CharField(label="Nueva Contraseña",widget= forms.PasswordInput(attrs={'placeholder': "Nueva Contraseña"}))
+    new_password2 = forms.CharField(label="Confirmar contraseña",widget= forms.PasswordInput(attrs={'placeholder': "Confirmar nueva contraseña"}))
 
     class Meta:
         model = User

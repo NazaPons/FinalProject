@@ -78,7 +78,7 @@ def cambiarContraseña(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            return render(request, 'perfil.html')
+            return render(request, 'paginas/perfil.html')
     else:
         form = ChangePasswordForm(user = request.user)
-    return render(request, 'changepass.html', {'form': form, 'usuario': usuario})
+    return render(request, 'paginas/cambiarContraseña.html', {'form': form, 'usuario': usuario})
