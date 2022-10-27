@@ -20,9 +20,9 @@ class Articulo(models.Model):
         super().delete()
 
 class Perfil(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
-    #image
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    image = models.ImageField(upload_to='avatares', null=True, blank=True)
 
     def __str__(self):
-        return f'Perfil de {self.usuario.username}'
+        return f'Perfil de {self.user.username}'
 

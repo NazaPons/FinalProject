@@ -20,6 +20,8 @@ urlpatterns = [
     path('perfil/', views.perfil, name='perfil'),
     path('editarPerfil/', views.editarPerfil, name='editarPerfil'), 
     path('cambiarContraseña/', views.cambiarContraseña, name='cambiarContraseña'),
+    path('cambiarAvatar/', views.cambiarAvatar, name='cambiarAvatar'),
+
     
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

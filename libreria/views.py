@@ -1,21 +1,36 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Articulo
-from .forms import ArticuloForm, UserRegisterForm, UserEditForm, ChangePasswordForm
+from .models import Articulo, Perfil
+from .forms import ArticuloForm, UserRegisterForm, UserEditForm, ChangePasswordForm, PerfilFormulario
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
 # Create your views here.
 
 def inicio(request):
-    return render(request, 'paginas/inicio.html')
+    avatar = Perfil.objects.filter(user = request.user.id)
+    try:
+        avatar = avatar[0].image.url
+    except:
+        avatar = None
+    return render(request, 'paginas/inicio.html', {'avatar': avatar})
 
 def nosotros(request):
-    return render(request, 'paginas/nosotros.html')
+    avatar = Perfil.objects.filter(user = request.user.id)
+    try:
+        avatar = avatar[0].image.url
+    except:
+        avatar = None
+    return render(request, 'paginas/nosotros.html', {'avatar': avatar})
 
 def articulos(request):
     articulos = Articulo.objects.all()
-    return render(request, 'articulos/index.html', {'articulos': articulos})
+    avatar = Perfil.objects.filter(user = request.user.id)
+    try:
+        avatar = avatar[0].image.url
+    except:
+        avatar = None
+    return render(request, 'articulos/index.html', {'articulos': articulos, 'avatar': avatar})
 
 def crear(request):
     formulario = ArticuloForm(request.POST or None, request.FILES or None)
@@ -38,7 +53,12 @@ def eliminar(request, id):
     return redirect('articulos')
 
 def perfil(request):
-    return render(request, 'paginas/perfil.html')
+    avatar = Perfil.objects.filter(user = request.user.id)
+    try:
+        avatar = avatar[0].image.url
+    except:
+        avatar = None
+    return render(request, 'paginas/perfil.html', {'avatar': avatar})
 
 def registro(request):
     if request.method == 'POST':
@@ -50,7 +70,6 @@ def registro(request):
             return redirect('inicio')
     else:
         form = UserRegisterForm()
-
     context = {'form': form} 
     return render(request, 'paginas/registro.html', context)
 
@@ -66,10 +85,20 @@ def editarPerfil(request):
             user_basic_info.first_name = form.cleaned_data.get('first_name')
             user_basic_info.last_name = form.cleaned_data.get('last_name')
             user_basic_info.save()
-            return render(request, 'paginas/perfil.html')
+            avatar = Perfil.objects.filter(user = request.user.id)
+            try:
+                avatar = avatar[0].image.url
+            except:
+                avatar = None
+            return render(request, 'paginas/perfil.html', {'avatar': avatar})
     else:
         form = UserEditForm(initial={'email': usuario.email, 'username': usuario.username, 'first_name': usuario.first_name, 'last_name': usuario.last_name })
-    return render(request, 'paginas/editarPerfil.html', {'form': form, 'usuario': usuario})
+        avatar = Perfil.objects.filter(user = request.user.id)
+        try:
+            avatar = avatar[0].image.url
+        except:
+            avatar = None
+    return render(request, 'paginas/editarPerfil.html', {'form': form, 'usuario': usuario, 'avatar': avatar})
 
 def cambiarContraseña(request):
     usuario = request.user
@@ -81,4 +110,32 @@ def cambiarContraseña(request):
             return render(request, 'paginas/perfil.html')
     else:
         form = ChangePasswordForm(user = request.user)
-    return render(request, 'paginas/cambiarContraseña.html', {'form': form, 'usuario': usuario})
+        avatar = Perfil.objects.filter(user = request.user.id)
+        try:
+            avatar = avatar[0].image.url
+        except:
+            avatar = None
+    return render(request, 'paginas/cambiarContraseña.html', {'form': form, 'usuario': usuario, 'avatar': avatar})
+
+def cambiarAvatar(request):
+    if request.method == 'POST':
+        form = PerfilFormulario(request.POST, request.FILES)
+        print(form)
+        print(form.is_valid())
+        if form.is_valid():
+            user = User.objects.get(username = request.user)
+            avatar = Perfil(user = user, image = form.cleaned_data['avatar'], id = request.user.id)
+            avatar.save()
+            avatar = Perfil.objects.filter(user = request.user.id)
+            try:
+                avatar = avatar[0].image.url
+            except:
+                avatar = None           
+            return render(request, 'paginas/perfil.html', {'avatar': avatar})
+    else:
+        try:
+            avatar = Perfil.objects.filter(user = request.user.id)
+            form = PerfilFormulario()
+        except:
+            form = PerfilFormulario()
+    return render(request, 'paginas/cambiarAvatar.html', {'form': form})
